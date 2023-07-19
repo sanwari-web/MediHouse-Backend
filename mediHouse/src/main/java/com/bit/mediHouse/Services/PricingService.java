@@ -1,11 +1,7 @@
 package com.bit.mediHouse.Services;
 
 import com.bit.mediHouse.Models.Pricing;
-import com.bit.mediHouse.Models.Session;
-import com.bit.mediHouse.Models.User;
 import com.bit.mediHouse.Repository.PricingRepository;
-import com.bit.mediHouse.Repository.UserRepository;
-import com.bit.mediHouse.exception.UserNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -29,8 +25,18 @@ public class PricingService {
         return pricingRepository.findAll();
     }
 
-//    public Pricing findPricingBypricing_id(Integer pricing_id) {
-//        return pricingRepository.findPricingBypricing_id(pricing_id).orElseThrow(() -> new UserNotFoundException("User by id " + pricing_id + " was not found"));
-//
-//    }
+    public Integer sumtotal_bill() {
+        return pricingRepository.sumtotal_bill();
+    }
+
+    public List<Object[]> findAllByTotal_bill(Integer total_bill) {
+
+        return pricingRepository.findAllByTotal_bill(total_bill);
+    }
+    public List<Object[]> findPricingGroupByUser() {
+
+        return pricingRepository.getPricing();
+    }
+
+
 }

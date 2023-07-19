@@ -8,7 +8,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 @CrossOrigin(origins = "*", allowedHeaders = "*")
 @RestController
@@ -27,12 +29,27 @@ public class UserController {
         List<User> user = userService.findAllUser();
         return new ResponseEntity <>(user, HttpStatus.OK);
     }
-
-    @GetMapping("/user/find/{id}")
-    public ResponseEntity <User> getUserById(@PathVariable("id") Integer id){
-        User user = userService.findUserById(id);
+    @GetMapping("/user/find/email/{email}")
+    public ResponseEntity <User> getUserByEmail(@PathVariable("email") String email){
+//        List<User> users = new ArrayList<>();
+        User user = userService.findUserByEmail(email);
+//        users.add(user);
         return new ResponseEntity <>(user, HttpStatus.OK);
     }
+
+
+    @GetMapping("/user/find/emailid/{Emailid}")
+    public ResponseEntity <User> getUserByEmailId(@PathVariable("email") String email){
+        User user = userService.getuserByEmail(email);
+        return new ResponseEntity <>(user, HttpStatus.OK);
+    }
+
+    @GetMapping("/user/find/patient/{id}")
+    public ResponseEntity <User> getuserById(@PathVariable("id") Integer id){
+        User user = userService.getuserById(id);
+        return new ResponseEntity <>(user, HttpStatus.OK);
+    }
+
 
     @PostMapping("/user/add")
     public ResponseEntity <User> addUser(@RequestBody User user){
@@ -45,12 +62,36 @@ public class UserController {
         User updateUser = userService.updateUser(user);
         return new ResponseEntity <>(updateUser, HttpStatus.CREATED);
     }
+    @PostMapping("/user/change/password")
+    public ResponseEntity <User> changeUserPassword(@RequestBody Map<String,Object> request){
+        User updateUser = userService.changePassword(request);
+        return new ResponseEntity <>(updateUser, HttpStatus.CREATED);
+    }
+
 
     @Transactional
     @DeleteMapping("/user/delete/{id}")
     public ResponseEntity <?> deleteUser(@PathVariable("id") Integer id){
        userService.deleteUser(id);
         return new ResponseEntity <>(HttpStatus.OK);
+    }
+
+    @GetMapping("/user/find/userbygender")
+    public ResponseEntity<List<User>> getusercountbygender() {
+        List<User> user = userService.getusercountbygender();
+        return new ResponseEntity <>(user, HttpStatus.OK);
+    }
+
+    @GetMapping("/user/find/patient")
+    public ResponseEntity<List<User>> getpatient() {
+        List<User> user = userService.getpatient();
+        return new ResponseEntity <>(user, HttpStatus.OK);
+    }
+
+    @GetMapping("/user/find/doctor")
+    public ResponseEntity <List<User>> getdoctor() {
+        List<User> user = userService.getdoctor();
+        return new ResponseEntity <>(user, HttpStatus.OK);
     }
 
 

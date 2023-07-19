@@ -1,9 +1,17 @@
 package com.bit.mediHouse.Models;
 
 
-import javax.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
-@Entity
+import javax.persistence.*;
+import java.time.LocalTime;
+import java.util.ArrayList;
+import java.util.List;
+
+@Entity(name ="user")
+@Data
 @Table(name = "User")
 public class User {
 
@@ -30,22 +38,64 @@ public class User {
     @Column(name = "Role")
     private String role;
 
+    @Column(name = "city")
+    private String city;
+
+    @Column(name = "district")
+    private String district;
+
+    @Column(name = "mobile")
+    private String mobile;
+
+    @Column(name = "dob")
+    private String dob;
+
+    public String getSessionroom() {
+        return sessionroom;
+    }
+
+    public void setSessionroom(String sessionroom) {
+        this.sessionroom = sessionroom;
+    }
+
+    @Column(name = "sessionroom",nullable = true)
+    private String sessionroom;
+
+    @Column(name = "appointmentstarttime" , nullable = true)
+    private LocalTime appointmentstarttime;
+
+    @Column(name = "appointmentendttime" , nullable = true)
+    private LocalTime appointmentendttime;
+
+//
+//    @Column(name = "image")
+//    private String image;
+
     @Column(name = "Password")
     private String password;
 
-    private Integer sessionCount;
+//    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+//    private List<Appointment> appointments = new ArrayList<>();
+
+//    private Integer sessionCount;
 
     public User() {}
 
-    public User(String first_name, String email,String nic, String gender,String last_name, String role, Integer sessionCount, String password) {
+    public User(String first_name, String email,String sessionroom,LocalTime appointmentstarttime ,LocalTime appointmentendttime,String nic,String city,String district,String mobile,String dob, String gender,String last_name,String image, String role, Integer sessionCount, String password) {
         this.first_name = first_name;
         this.email = email;
         this.last_name = last_name;
         this.nic = nic;
         this.gender = gender;
         this.role = role;
-        this.sessionCount = sessionCount;
-       this.password = password;
+        this.city = city;
+        this.district = district;
+        this.mobile = mobile;
+        this.dob = dob;
+        this.sessionroom = sessionroom;
+        this.appointmentstarttime = appointmentstarttime;
+        this.appointmentendttime = appointmentendttime;
+        this.password = password;
     }
 
     public Integer getId() {
@@ -103,6 +153,38 @@ public class User {
     public void setRole(String role) {
         this.role = role;
     }
+    public String getCity() {
+        return city;
+    }
+
+    public void setCity(String city) {
+        this.city = city;
+    }
+
+    public String getDistrict() {
+        return district;
+    }
+
+    public void setDistrict(String district) {
+        this.district = district;
+    }
+
+    public String getMobile() {
+        return mobile;
+    }
+
+    public void setMobile(String mobile) {
+        this.mobile = mobile;
+    }
+
+    public String getDob() {
+        return dob;
+    }
+
+    public void setDob(String dob) {
+        this.dob = dob;
+    }
+
 
     public String getPassword() {
         return password;
@@ -112,13 +194,6 @@ public class User {
         this.password = password;
     }
 
-    public int getSessionCount() {
-        return sessionCount;
-    }
-
-    public void setSessionCount(int sessionCount) {
-        this.sessionCount = sessionCount;
-    }
 
     @Override
     public String toString() {
@@ -130,8 +205,20 @@ public class User {
                 ", nic='" + nic + '\'' +
                 ", password='" + password + '\'' +
                 ", gender='" + gender + '\'' +
-                ", sessionCount='" + sessionCount + '\'' +
+//                ", image='" + image + '\'' +
+//                ", sessionCount='" + sessionCount + '\'' +
                 ", role='" + role + '\'' +
+                ", city='" + city + '\'' +
+                ", district='" + district + '\'' +
+                ", mobile='" + mobile + '\'' +
+                ", password='" + password + '\'' +
+                ", dob='" + dob + '\'' +
+                ", dob='" + sessionroom + '\'' +
+                ", dob='" + appointmentstarttime + '\'' +
+                ", dob='" + appointmentendttime + '\'' +
+
+
                 '}';
     }
+
 }

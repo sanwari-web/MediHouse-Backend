@@ -1,8 +1,9 @@
 package com.bit.mediHouse.Models;
 
 import javax.persistence.*;
+import java.util.Date;
 
-@Entity
+@Entity(name ="pricing")
 @Table(name = "Pricing")
 public class Pricing {
 
@@ -11,16 +12,17 @@ public class Pricing {
     @Column(nullable = false, updatable = false)
     private Integer pricing_id;
 
-    @ManyToOne(optional = false, targetEntity = Patient.class)
+    @ManyToOne(optional = false, targetEntity = User.class)
     @JoinColumn(name = "patien_id", nullable = false)
-    private Patient patient;
+    private User patient;
 
-//    @ManyToOne( optional = false, targetEntity = User.class)
-//    @JoinColumn(name = "consulta_id", nullable = false)
-//    private User user;
+    @ManyToOne( optional = false, targetEntity = User.class)
+    @JoinColumn(name = "consulta_id", nullable = false)
+    private User user;
 
     @OneToOne( optional = false, targetEntity = Session.class)
     @JoinColumn(name = "sessions_id", nullable = false)
+
     private Session session;
 
     @Column(name = "consultation_fees")
@@ -30,16 +32,25 @@ public class Pricing {
     private String medication_fees;
 
     @Column(name = "total_bill")
-    private String total_bill;
+    private Integer total_bill;
 
+    @Temporal(TemporalType.DATE)
+    @Column(name = "date", nullable = false)
+    private Date date;
+
+    @PrePersist
+    private  void onCreate(){
+        date = new Date();
+    }
     public Pricing() {}
 
-    public Pricing(String consultation_fees,Patient patient,User user,Session sesssion, String medication_fees, String total_bill ) {
+    public Pricing(String consultation_fees,User patient,Date date,User user,Session session, String medication_fees, Integer total_bill ) {
         this.medication_fees = medication_fees;
         this.consultation_fees = consultation_fees;
         this.total_bill = total_bill;
         this.patient  =  patient;
-//        this.user  =  user;
+        this.date = date;
+        this.user  =  user;
         this.session = session;
 
     }
@@ -68,27 +79,34 @@ public class Pricing {
         this.medication_fees = medication_fees;
     }
 
-    public String getTotal_bill() {
+    public Integer getTotal_bill() {
         return total_bill;
     }
 
-    public void setTotal_bill(String total_bill) {
+    public void setTotal_bill(Integer total_bill) {
         this.total_bill = total_bill;
     }
 
-//    public User  getUser() {
-//        return user;
-//    }
-//
-//    public void setUser(User user) {
-//        this.user = user;
-//    }
+    public Date getDate() {
+        return date;
+    }
 
-    public Patient getPatient() {
+    public void setDate(Date date) {
+        this.date = date;
+    }
+    public User  getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+
+    public User getPatient() {
         return patient;
     }
 
-    public void setPatient(Patient patient) {
+    public void setPatient(User patient) {
         this.patient = patient;
     }
     public Session getSession() {
@@ -105,9 +123,10 @@ public class Pricing {
                 ", consultation_fees='" + consultation_fees + '\'' +
                 ", medication_fees='" + medication_fees + '\'' +
                 ", total_bill='" + total_bill + '\'' +
-               // ", user ='" + user + '\'' +
+                ", user ='" + user + '\'' +
                 ", patient='" + patient + '\'' +
                 ", session ='" + session + '\'' +
+                ", date ='" + date + '\'' +
                 '}';
     }
 

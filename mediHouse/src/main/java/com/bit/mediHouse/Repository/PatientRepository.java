@@ -15,4 +15,10 @@ public interface PatientRepository extends JpaRepository<Patient,Integer> {
     Optional<Patient>  findPatientById(Integer id);
 
     Optional<Patient> findPatientBynic(String nic);
+
+    Optional<Patient> findPatientsBygender(String gender);
+
+    Patient findByEmail(String email);
+
+
 }

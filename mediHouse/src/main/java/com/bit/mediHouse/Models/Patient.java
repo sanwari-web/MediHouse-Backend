@@ -20,6 +20,9 @@ public class Patient {
     @Column(name = "email")
     private String email;
 
+    @Column(name = "password")
+    private String password;
+
     @Column(name = "gender")
     private String gender;
 
@@ -47,11 +50,12 @@ public class Patient {
 
 //    public Patient() {}
 
-    public Patient(String firstname, String email,String nic, String gender,String lastname,String dob, String city, String district, String mobile) {
+    public Patient(String firstname, String password, String email,String nic, String gender,String lastname,String dob, String city, String district, String mobile) {
         this.firstname = firstname;
         this.email = email;
         this.nic = nic;
         this.gender = gender;
+        this.password = password;
         this.lastname = lastname;
         this.city = city;
         this.district = district;
@@ -95,6 +99,14 @@ public class Patient {
 
     public void setGender(String gender) {
         this.gender = gender;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
     }
 
     public String getFirstname() {
@@ -157,6 +169,7 @@ public class Patient {
                 ", city='" + city + '\'' +
                 ", district='" + district + '\'' +
                 ", mobile='" + mobile + '\'' +
+                ", password='" + password + '\'' +
                 ", dob='" + dob + '\'' +
                 '}';
     }

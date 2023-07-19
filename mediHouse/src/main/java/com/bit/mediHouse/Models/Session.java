@@ -1,6 +1,9 @@
 package com.bit.mediHouse.Models;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 import javax.persistence.*;
+import java.util.Date;
 
 @Entity
 @Table(name = "Session")
@@ -33,20 +36,31 @@ public class Session {
     @Column(name = "medical_reports")
     private String medical_reports;
 
-    @ManyToOne(optional = false, targetEntity = Patient.class)
+   @Temporal(TemporalType.DATE)
+//    @JsonFormat(pattern="EEEE, MMMM d, y")
+    @Column(name = "date", nullable = false)
+    private Date date;
+
+    @PrePersist
+    private  void onCreate(){
+        date = new Date();
+    }
+
+    @ManyToOne(optional = false, targetEntity = User.class)
     @JoinColumn(name = "patient_id", nullable = false)
-    private Patient patient;
+    private User patient;
 
-//    @ManyToOne( optional = false, targetEntity = User.class)
-//    @JoinColumn(name = "consult_id", nullable = false)
-//    private User user;
+    @ManyToOne( optional = false, targetEntity = User.class)
+    @JoinColumn(name = "consult_id", nullable = false)
+    private User user;
 
-    public Session(Integer session_id,Patient patient,User user,String reason , String diagnosis, String diagnosis_details,String clinic_medicine,String pharmacy_medicine, String medical_operations, String medical_reports ) {
+    public Session(Integer session_id,User patient,User user,Date date,String reason , String diagnosis, String diagnosis_details,String clinic_medicine,String pharmacy_medicine, String medical_operations, String medical_reports ) {
 
            this.session_id = session_id;
             this.patient  =  patient;
-        //    this.user  =  user;
+            this.user  =  user;
             this.reason = reason;
+            this.date = date;
             this.diagnosis = diagnosis;
             this.diagnosis_details = diagnosis_details;
             this.clinic_medicine = clinic_medicine;
@@ -69,19 +83,19 @@ public class Session {
         this.session_id = session_id;
     }
 
-//    public User  getUser() {
-//        return user;
-//    }
-//
-//    public void setUser(User user) {
-//        this.user = user;
-//    }
+    public User  getUser() {
+        return user;
+    }
 
-    public Patient getPatient() {
+    public void setUser(User user) {
+        this.user = user;
+    }
+
+    public User getPatient() {
         return patient;
     }
 
-    public void setPatient(Patient patient) {
+    public void setPatient(User patient) {
         this.patient = patient;
     }
 
@@ -141,14 +155,23 @@ public class Session {
         this.medical_reports = medical_reports;
     }
 
+    public Date getDate() {
+        return date;
+    }
+
+    public void setDate(Date date) {
+        this.date = date;
+    }
+
 
     @Override
     public String toString() {
         return "Session{" +
                 "session_id=" + session_id +
-                //     ", user ='" + user + '\'' +
+                ", user ='" + user + '\'' +
                 ", patient='" + patient + '\'' +
                 ", reason='" + reason + '\'' +
+                ", date='" + date + '\'' +
                 ", diagnosis='" + diagnosis + '\'' +
                 ", diagnosis_details='" + diagnosis_details + '\'' +
                 ", medical_reports='" + medical_reports + '\'' +

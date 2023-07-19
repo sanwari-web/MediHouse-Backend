@@ -39,9 +39,15 @@ public class PatientController {
         return new ResponseEntity <>(patient, HttpStatus.OK);
     }
     @GetMapping("/patient/find/nic/{nic}")
-    public ResponseEntity <Patient> getPatientBynic(@PathVariable("nic") String nic){
+    public ResponseEntity <Patient> getPatientBynic(@PathVariable("nic") String nic) {
         Patient patient = patientService.findPatientBynic(nic);
-        return new ResponseEntity <>(patient, HttpStatus.OK);
+        return new ResponseEntity<>(patient, HttpStatus.OK);
+    }
+
+    @GetMapping("/patient/find/gender/{gender}")
+        public ResponseEntity <Patient> getPatientBygender(@PathVariable("gender") String gender ){
+            Patient patient = patientService.findPatientBygender(gender);
+            return new ResponseEntity <>(patient, HttpStatus.OK);
     }
     @PostMapping("/patient/add")
     public ResponseEntity <Patient> addPatient(@RequestBody Patient patient){

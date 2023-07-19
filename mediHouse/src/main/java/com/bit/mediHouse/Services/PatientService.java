@@ -1,14 +1,25 @@
 package com.bit.mediHouse.Services;
 
 import com.bit.mediHouse.Models.Patient;
+import com.bit.mediHouse.Models.User;
 import com.bit.mediHouse.Repository.PatientRepository;
 import com.bit.mediHouse.exception.UserNotFoundException;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 @Service
+@Transactional
+@Slf4j
 public class PatientService {
 
     private final PatientRepository patientRepository;
@@ -36,6 +47,9 @@ public class PatientService {
     }
     public Patient findPatientBynic(String nic) {
         return patientRepository.findPatientBynic(nic).orElseThrow(() -> new UserNotFoundException("User by nic " + nic + " was not found"));
+    }
+    public Patient findPatientBygender(String gender) {
+        return patientRepository.findPatientsBygender(gender).orElseThrow(() -> new UserNotFoundException("User by nic " + gender + " was not found"));
     }
 
     public void deletePatient(Integer id){
